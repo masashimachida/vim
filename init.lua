@@ -53,6 +53,7 @@ vim.keymap.set('n', 'aa', vim.diagnostic.open_float, {})
 -- Ctrl+Alt+lでフォーマット
 vim.keymap.set("n", "<C-M-l>", function()
     vim.lsp.buf.format({ async = true })
+    vim.notify("Formatting...", vim.log.levels.INFO)
 end, { desc = "Format current buffer" })
 
 -- <leader>llでCodeAction
@@ -91,10 +92,23 @@ vim.keymap.set("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>")
 -- ----------------------------------------------------------------------------------------------
 -- claudecode.nvim
 -- ----------------------------------------------------------------------------------------------
-vim.keymap.set("n", "<leader>ac", "<cmd>ClaudeCode<cr>", { desc = "Claude Codeを切り替え" })
-vim.keymap.set("n", "<leader>af", "<cmd>ClaudeCodeFocus<cr>", { desc = "Claudeにフォーカス" })
-vim.keymap.set("n", "<leader>ar", "<cmd>ClaudeCode --resume<cr>", { desc = "セッションを再開" })
+vim.keymap.set("n", "<leader>cc", "<cmd>ClaudeCode<cr>", { desc = "Claude Codeを切り替え" })
+-- vim.keymap.set("n", "<leader>af", "<cmd>ClaudeCodeFocus<cr>", { desc = "Claudeにフォーカス" })
+-- vim.keymap.set("n", "<leader>ar", "<cmd>ClaudeCode --resume<cr>", { desc = "セッションを再開" })
 -- vim.keymap.set("n", "<leader>as", "<cmd>ClaudeCodeSend<cr>", { desc = "選択範囲を送信", mode = "v" })
+
+-- ClaudeCodeのペインにフォーカスが当たったら常にノーマルモードにする
+vim.api.nvim_create_autocmd("WinEnter", {
+    callback = function()
+        if vim.bo.buftype == "terminal" and vim.fn.bufname():match("[Cc]laude") then
+            vim.api.nvim_feedkeys(
+                vim.api.nvim_replace_termcodes('<C-\\><C-n>', true, false, true),
+                'n',
+                true
+            )
+        end
+    end,
+})
 
 -- ----------------------------------------------------------------------------------------------
 -- neo-tree.nvim
