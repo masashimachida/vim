@@ -27,23 +27,27 @@ return
 		})
 
 		local capabilities = require('cmp_nvim_lsp').default_capabilities()
-        local servers = { "ts_ls", "lua_ls", "intelephense", "phpactor" }
+		local servers = { "ts_ls", "lua_ls", "intelephense", "phpactor" }
+
+		-- サーバーごとの固有設定
+		local server_settings = {
+			intelephense = {
+				settings = {
+					intelephense = {
+						completion = {
+							fullyQualifyImportAnnotations = true,
+							insertUseDeclaration = true,
+						},
+					},
+				},
+			},
+		}
 
 		for _, server in ipairs(servers) do
-            -- vim.lsp.config でサーバーごとの設定を登録
-            vim.lsp.config(server, {
-                capabilities = capabilities,
-                settings = {
-                    intelephense = {
-                        completion = {
-                            fullyQualifyImportAnnotations = true,
-                            insertUseDeclaration = true,
-                        },
-                    },
-                },
-            })
-            -- 実際にそのサーバーを有効化
-            vim.lsp.enable(server)
-        end
+			vim.lsp.config(server, vim.tbl_extend("force", {
+				capabilities = capabilities,
+			}, server_settings[server] or {}))
+			vim.lsp.enable(server)
+		end
 	end,
 }

@@ -1,6 +1,2 @@
-return
--- lsp icons like vscode
-{
-    "onsails/lspkind.nvim",
-    event = "InsertEnter",
-}
+-- nvim-cmp.lua の dependency として管理
+return {}

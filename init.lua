@@ -2,7 +2,7 @@
 vim.g.mapleader = " "
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         "git",
         "clone",
@@ -45,7 +45,7 @@ vim.keymap.set('n', '<Esc><Esc>', ':nohlsearch<CR><Esc>', { silent = true })
 vim.keymap.set('n', '<C-_>', 'gccj', { remap = true, desc = "Toggle comment and move down" })
 -- ビジュアルモード: Ctrl + / で選択範囲をコメントして抜ける (下へ移動)
 -- ※ビジュアルモードは 'gc' のあとに自動で選択解除されるため、'j' で一行下へ
-vim.keymap.set('v', '<C-_>', 'gcjgv', { remap = true, desc = "Toggle comment and move down" })
+vim.keymap.set('v', '<C-_>', 'gcj', { remap = true, desc = "Toggle comment and move down" })
 
 -- aaで警告などの詳細を開く
 vim.keymap.set('n', 'aa', vim.diagnostic.open_float, {})
@@ -95,8 +95,6 @@ vim.keymap.set("n", "<leader>ac", "<cmd>ClaudeCode<cr>", { desc = "Claude Code�
 vim.keymap.set("n", "<leader>af", "<cmd>ClaudeCodeFocus<cr>", { desc = "Claudeにフォーカス" })
 vim.keymap.set("n", "<leader>ar", "<cmd>ClaudeCode --resume<cr>", { desc = "セッションを再開" })
 -- vim.keymap.set("n", "<leader>as", "<cmd>ClaudeCodeSend<cr>", { desc = "選択範囲を送信", mode = "v" })
-
-
 
 -- ----------------------------------------------------------------------------------------------
 -- neo-tree.nvim
