@@ -9,7 +9,8 @@ return
 	config = function()
 		require("mason").setup()
 		require("mason-lspconfig").setup({
-			ensure_installed = { "ts_ls", "lua_ls", "intelephense", "phpactor" },
+			-- ensure_installed = { "ts_ls", "lua_ls", "intelephense", "phpactor" },
+			ensure_installed = { "ts_ls", "lua_ls", "phpactor" },
 		})
 
 		vim.diagnostic.config({
@@ -27,7 +28,8 @@ return
 		})
 
 		local capabilities = require('cmp_nvim_lsp').default_capabilities()
-		local servers = { "ts_ls", "lua_ls", "intelephense", "phpactor" }
+		-- local servers = { "ts_ls", "lua_ls", "intelephense", "phpactor" }
+		local servers = { "ts_ls", "lua_ls", "phpactor" }
 
 		-- サーバーごとの固有設定
 		local server_settings = {
@@ -40,6 +42,9 @@ return
 						},
 					},
 				},
+			},
+			phpactor = {
+				filetypes = { "php", "blade" },
 			},
 		}
 

@@ -48,6 +48,7 @@ return {
 		},
 		window = {
 			width = 35,
+            fixed_width = true,
 			mappings = {
 				-- サイドバー内で C-f を押しても「閉じない」ように上書き
 				["<C-f>"] = "none",

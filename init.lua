@@ -32,11 +32,27 @@ require("lazy").setup("plugins", {
 -- jjでINSERTモードを抜ける
 vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = true })
 
+-- Ctrl+sで保存
+vim.keymap.set('n', '<C-s>', '<cmd>w<CR>', { noremap = true, silent = true })
+vim.keymap.set('i', '<C-s>', '<Esc><cmd>w<CR>', { noremap = true, silent = true })
+
 -- Ctrl + h/j/k/l だけでペイン間を移動できるようにする
 vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-j>', '<C-w>j')
 vim.keymap.set('n', '<C-k>', '<C-w>k')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
+
+-- Option + h/j/k/l でウィンドウをリサイズ
+vim.keymap.set('n', '<M-h>', '<cmd>vertical resize -2<cr>')
+vim.keymap.set('n', '<M-l>', '<cmd>vertical resize +2<cr>')
+vim.keymap.set('n', '<M-j>', '<cmd>resize -2<cr>')
+vim.keymap.set('n', '<M-k>', '<cmd>resize +2<cr>')
+
+-- ウィンドウ分割
+vim.keymap.set('n', '<leader>|', '<cmd>vsplit<cr>')
+vim.keymap.set('n', '<leader>S', '<cmd>split<cr>')
+
+
 
 -- Esc 2回で検索のハイライトを消す
 vim.keymap.set('n', '<Esc><Esc>', ':nohlsearch<CR><Esc>', { silent = true })
@@ -50,7 +66,7 @@ vim.keymap.set('v', '<C-_>', 'gcj', { remap = true, desc = "Toggle comment and m
 -- aaで警告などの詳細を開く
 vim.keymap.set('n', 'aa', vim.diagnostic.open_float, {})
 
--- Ctrl+Alt+lでフォーマット
+-- Ctrl+Option+lでフォーマット
 vim.keymap.set("n", "<C-M-l>", function()
     vim.lsp.buf.format({ async = true })
     vim.notify("Formatting...", vim.log.levels.INFO)
@@ -58,6 +74,9 @@ end, { desc = "Format current buffer" })
 
 -- <leader>llでCodeAction
 vim.keymap.set('n', '<leader>ll', vim.lsp.buf.code_action, { desc = "Code Action" })
+
+-- <leader> + r + n でリネーム
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable' })
 
 -- ターミナル
 function _G.set_terminal_keymaps()
@@ -79,7 +98,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
 -- bufdelete.nvim
 -- ----------------------------------------------------------------------------------------------
 -- バッファを閉じる
-vim.keymap.set("n", "<C-w>", "<cmd>Bdelete<cr>", { silent = true, remap = true })
+vim.keymap.set("n", "<C-w>", "<cmd>Bdelete<cr>", { silent = true, remap = true, nowait = true })
 
 -- ----------------------------------------------------------------------------------------------
 -- bufferline.nvim
@@ -150,6 +169,9 @@ vim.keymap.set('n', 'gr', builtin.lsp_references, { desc = "参照一覧" })
 -- 行番号を表示
 vim.opt.number = true
 
+-- マウスを有効に
+vim.opt.mouse = 'a'
+
 -- 折り返しなし
 vim.opt.wrap = false
 -- 横スクロールが発生した際、カーソル周辺に表示する最小の列数（5文字分余裕を持たせる）
@@ -183,3 +205,10 @@ vim.opt.undofile = true
 vim.opt.signcolumn = "yes"
 
 vim.opt.switchbuf = "useopen"
+
+-- 外部でファイルが変更された時に自動リロード
+vim.opt.autoread = true
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+    command = "checktime",
+})
+vim.keymap.set('n', '<leader>re', '<cmd>edit!<cr>', { desc = "バッファをリロード" })
