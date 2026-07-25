@@ -160,6 +160,7 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = "開いているバ�
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "ヘルプを検索" })
 -- LSP関連（定義へジャンプの代わりに使うと便利）
 vim.keymap.set('n', 'gd', builtin.lsp_definitions, { desc = "定義へジャンプ" })
+vim.keymap.set('n', 'gi', builtin.lsp_implementations, { desc = "実装へジャンプ" })
 vim.keymap.set('n', 'gr', builtin.lsp_references, { desc = "参照一覧" })
 
 
