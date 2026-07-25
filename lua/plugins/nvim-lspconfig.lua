@@ -40,11 +40,22 @@ return
 							fullyQualifyImportAnnotations = true,
 							insertUseDeclaration = true,
 						},
+                        environment = {
+                            language = "ja" -- メッセージを日本語に設定
+                        },
+                        stubs = {
+                            "Core",
+                            "standard",
+                            -- 他に必要な stubs (例: "date", "json", "hash" など) があればここに記述
+                        },
 					},
 				},
 			},
 			phpactor = {
 				filetypes = { "php", "blade" },
+				settings = {
+					["phpactor.stub_resolver.source"] = "all", -- または "php" もしくは "all"
+				},
 			},
 		}
 
