@@ -4,7 +4,7 @@ return
     config = function()
         require("notify").setup({
             top_down = false, -- 下から上に表示
-            background_colour = vim.api.nvim_get_hl(0, { name = "Normal" }).bg or "#000000",
+            background_colour = "Normal",
             timeout = 3000,   -- 3秒で自動消去
             stages = "static", -- 消え方のスタイル
         })

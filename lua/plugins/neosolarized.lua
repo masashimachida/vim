@@ -1,4 +1,25 @@
-return 
+return
+{
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function()
+        require("tokyonight").setup({
+            comment_italics = true,
+            transparent = true,
+            -- transparent=trueだけではNormalFloat/NeoTreeNormal等は透過されないため明示指定
+            styles = {
+                floats = "transparent",
+                sidebars = "transparent",
+            },
+        })
+        vim.cmd.colorscheme("tokyonight")
+    end,
+
+}
+
+--[[
 {
   "svrana/neosolarized.nvim",
   lazy = false,
@@ -14,3 +35,4 @@ return
     "tjdevries/colorbuddy.nvim",
   },
 }
+--]]
