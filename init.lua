@@ -57,11 +57,13 @@ vim.keymap.set('n', '<leader>S', '<cmd>split<cr>')
 -- Esc 2回で検索のハイライトを消す
 vim.keymap.set('n', '<Esc><Esc>', ':nohlsearch<CR><Esc>', { silent = true })
 
--- ノーマルモード: Ctrl + / でコメントして次の行へ
+-- ノーマルモード: Ctrl + / でコメントして次の行へ(weztermだと<C-/>じゃないとうごかない)
 vim.keymap.set('n', '<C-_>', 'gccj', { remap = true, desc = "Toggle comment and move down" })
+vim.keymap.set('n', '<C-/>', 'gccj', { remap = true, desc = "Toggle comment and move down" })
 -- ビジュアルモード: Ctrl + / で選択範囲をコメントして抜ける (下へ移動)
 -- ※ビジュアルモードは 'gc' のあとに自動で選択解除されるため、'j' で一行下へ
 vim.keymap.set('v', '<C-_>', 'gcj', { remap = true, desc = "Toggle comment and move down" })
+vim.keymap.set('v', '<C-/>', 'gcj', { remap = true, desc = "Toggle comment and move down" })
 
 -- aaで警告などの詳細を開く
 vim.keymap.set('n', 'aa', vim.diagnostic.open_float, {})
@@ -147,7 +149,8 @@ local function open_or_focus_neotree()
         vim.cmd("Neotree show left")
     end
 end
-vim.keymap.set("n", "<C-f>", open_or_focus_neotree, { desc = "Focus or Open Neo-tree" })
+-- vim.keymap.set("n", "<C-f>", open_or_focus_neotree, { desc = "Focus or Open Neo-tree" })
+vim.keymap.set("n", "<leader>tt", "<cmd>Neotree<cr>", { desc = "Neotreeを開く" })
 
 -- ----------------------------------------------------------------------------------------------
 -- telescope.nvim
@@ -162,6 +165,16 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = "ヘルプを検�
 vim.keymap.set('n', 'gd', builtin.lsp_definitions, { desc = "定義へジャンプ" })
 vim.keymap.set('n', 'gi', builtin.lsp_implementations, { desc = "実装へジャンプ" })
 vim.keymap.set('n', 'gr', builtin.lsp_references, { desc = "参照一覧" })
+
+-- ----------------------------------------------------------------------------------------------
+-- vim-dadbod-ui.nvim
+-- ----------------------------------------------------------------------------------------------
+-- vim.g.db_ui_win_position = 'right'
+vim.g.db_ui_tmp_query_location = '~/queries'
+vim.g.db_ui_use_nerd_fonts = 0
+vim.g.db_ui_show_database_icon = 0
+vim.g.db_ui_force_echo_notifications = 1
+vim.keymap.set("n", "<leader>db", "<cmd>DBUI<cr>", { desc = "vim-dadbod-uiを起動" })
 
 
 

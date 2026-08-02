@@ -28,5 +28,8 @@
   "telescope-fzf-native.nvim": { "branch": "main", "commit": "6fea601bd2b694c6f2ae08a6c6fab14930c60e2c" },
   "telescope.nvim": { "branch": "master", "commit": "506338434fec5ad19cb1f8d45bf92d66c4917393" },
   "toggleterm.nvim": { "branch": "main", "commit": "50ea089fc548917cc3cc16b46a8211833b9e3c7c" },
-  "vim-blade": { "branch": "master", "commit": "9534101808cc320eef003129a40cab04b026a20c" }
+  "vim-blade": { "branch": "master", "commit": "9534101808cc320eef003129a40cab04b026a20c" },
+  "vim-dadbod": { "branch": "master", "commit": "6d1d41da4873a445c5605f2005ad2c68c99d8770" },
+  "vim-dadbod-completion": { "branch": "master", "commit": "a8dac0b3cf6132c80dc9b18bef36d4cf7a9e1fe6" },
+  "vim-dadbod-ui": { "branch": "master", "commit": "afd07819d8efcefc3317205b855ad4e3513b0011" }
 }
