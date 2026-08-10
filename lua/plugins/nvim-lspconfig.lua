@@ -19,7 +19,7 @@ return
 		require("mason").setup()
 		require("mason-lspconfig").setup({
 			-- ensure_installed = { "ts_ls", "lua_ls", "intelephense", "phpactor" },
-			ensure_installed = { "ts_ls", "lua_ls", "phpactor" },
+			ensure_installed = { "ts_ls", "lua_ls", "phpactor", "cssls" },
 		})
 
 		vim.diagnostic.config({
@@ -38,10 +38,18 @@ return
 
 		local capabilities = require('cmp_nvim_lsp').default_capabilities()
 		-- local servers = { "ts_ls", "lua_ls", "intelephense", "phpactor" }
-		local servers = { "ts_ls", "lua_ls", "phpactor" }
+		local servers = { "ts_ls", "lua_ls", "phpactor", "cssls" }
 
 		-- サーバーごとの固有設定
 		local server_settings = {
+			cssls = {
+				settings = {
+					-- Marpテーマの @import-theme などカスタムat-ruleを未知として警告しない
+					css = { lint = { unknownAtRules = "ignore" } },
+					scss = { lint = { unknownAtRules = "ignore" } },
+					less = { lint = { unknownAtRules = "ignore" } },
+				},
+			},
 			intelephense = {
 				settings = {
 					intelephense = {
