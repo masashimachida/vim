@@ -1,3 +1,6 @@
+-- noだとi-nodeが変わってホットリロード系がおかしくなるのでyesに変更
+vim.opt.backupcopy = "yes"
+
 -- スペースキーをリーダーキーに設定
 vim.g.mapleader = " "
 
