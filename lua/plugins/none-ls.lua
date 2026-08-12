@@ -20,6 +20,8 @@ return
 					extra_args = { "--path-mode=intersection", "$FILENAME" },
 				}),
 				-- null_ls.builtins.formatting.phpcsfixer,
+				-- sql-formatter: SQLフォーマッター
+				null_ls.builtins.formatting.sql_formatter,
 			},
 		})
 	end,

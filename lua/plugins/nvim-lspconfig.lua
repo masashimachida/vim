@@ -4,6 +4,7 @@ return
 	dependencies = {
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		"hrsh7th/cmp-nvim-lsp",
         {
 			"folke/lazydev.nvim",
@@ -19,7 +20,11 @@ return
 		require("mason").setup()
 		require("mason-lspconfig").setup({
 			-- ensure_installed = { "ts_ls", "lua_ls", "intelephense", "phpactor" },
-			ensure_installed = { "ts_ls", "lua_ls", "phpactor", "cssls" },
+			ensure_installed = { "ts_ls", "lua_ls", "phpactor", "cssls", "sqls" },
+		})
+		require("mason-tool-installer").setup({
+			-- LSPサーバー以外のツール（フォーマッタ・リンタ等）をmason経由で自動インストール
+			ensure_installed = { "sql-formatter" },
 		})
 
 		vim.diagnostic.config({
@@ -38,7 +43,7 @@ return
 
 		local capabilities = require('cmp_nvim_lsp').default_capabilities()
 		-- local servers = { "ts_ls", "lua_ls", "intelephense", "phpactor" }
-		local servers = { "ts_ls", "lua_ls", "phpactor", "cssls" }
+		local servers = { "ts_ls", "lua_ls", "phpactor", "cssls", "sqls" }
 
 		-- サーバーごとの固有設定
 		local server_settings = {
@@ -73,6 +78,26 @@ return
 				settings = {
 					["phpactor.stub_resolver.source"] = "all", -- または "php" もしくは "all"
 				},
+			},
+			sqls = {
+				-- デフォルトの root_markers は直下の "config.yml" のみで
+				-- .sqls/config.yml（サブディレクトリ配置）を検出できないため明示指定
+				root_markers = { ".sqls", ".git" },
+				-- プロジェクトルートに .sqls/config.yml があればそれを使う
+				-- （なければ ~/.config/sqls/config.yml のグローバル設定にフォールバック）
+				-- 注: on_new_config は lspconfig 独自フックで vim.lsp.config には効かないため
+				-- cmd を関数形式にして root_dir 確定後に動的組み立てする
+				cmd = function(dispatchers, config)
+					local cmd = { "sqls" }
+					local root_dir = config.root_dir
+					if root_dir then
+						local project_config = root_dir .. "/.sqls/config.yml"
+						if vim.fn.filereadable(project_config) == 1 then
+							cmd = { "sqls", "-config", project_config }
+						end
+					end
+					return vim.lsp.rpc.start(cmd, dispatchers)
+				end,
 			},
 		}
 
