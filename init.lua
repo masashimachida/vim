@@ -86,8 +86,16 @@ vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable'
 -- ターミナル
 function _G.set_terminal_keymaps()
     local opts = { buffer = 0 }
-    -- Escでターミナルモードを抜ける
-    vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+    -- Claude Codeのターミナルではescをジョブにそのまま送る必要があるため、
+    -- escでターミナルモードを抜けるマッピングは設定しない
+    if vim.fn.bufname():match("[Cc]laude") then
+        -- Ctrl+nはweztermがワークスペース切り替えに使っており<C-\><C-n>が届かないため、
+        -- 代わりにC-qでターミナルモードを抜けられるようにする
+        vim.keymap.set('t', '<C-q>', [[<C-\><C-n>]], opts)
+    else
+        -- Escでターミナルモードを抜ける
+        vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+    end
     -- clear
     vim.keymap.set('t', '<C-l>', [[<C-l>]], { buffer = 0 })
 end
