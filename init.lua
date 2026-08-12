@@ -186,6 +186,29 @@ vim.opt.number = true
 -- マウスを有効に
 vim.opt.mouse = 'a'
 
+-- ビジュアルモードで選択している間、選択範囲をリアルタイムでシステムクリップボードに同期する
+-- (mouse=a によりドラッグ選択もNeovim側のビジュアル選択になるため、
+--  WezTerm本来の「選択したら自動コピー」の挙動をNeovim側で再現する)
+-- y や選択解除を待たず、選択が変化するたびに getregion() で選択中テキストを取得してコピーする
+local function sync_visual_selection_to_clipboard()
+    local mode = vim.fn.mode()
+    if mode ~= "v" and mode ~= "V" and mode ~= "\22" then
+        return
+    end
+    local ok, lines = pcall(vim.fn.getregion, vim.fn.getpos("v"), vim.fn.getpos("."), { type = mode })
+    if not ok or not lines or #lines == 0 then
+        return
+    end
+    vim.fn.setreg("+", table.concat(lines, "\n"), mode == "\22" and "b" or mode)
+end
+
+local clipboard_sync_group = vim.api.nvim_create_augroup("AutoCopyVisualSelection", { clear = true })
+vim.api.nvim_create_autocmd({ "CursorMoved", "ModeChanged" }, {
+    group = clipboard_sync_group,
+    pattern = "*",
+    callback = sync_visual_selection_to_clipboard,
+})
+
 -- 折り返しなし
 vim.opt.wrap = false
 -- 横スクロールが発生した際、カーソル周辺に表示する最小の列数（5文字分余裕を持たせる）
