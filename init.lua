@@ -1,3 +1,6 @@
+-- noだとi-nodeが変わってホットリロード系がおかしくなるのでyesに変更
+vim.opt.backupcopy = "yes"
+
 -- スペースキーをリーダーキーに設定
 vim.g.mapleader = " "
 
@@ -240,6 +243,9 @@ vim.opt.undofile = true
 
 -- 常に行番号の左側に領域を確保
 vim.opt.signcolumn = "yes"
+
+-- floatウィンドウ(hover/diagnosticなど)に枠線をつける
+vim.opt.winborder = "rounded"
 
 vim.opt.switchbuf = "useopen"
 
