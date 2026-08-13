@@ -98,6 +98,12 @@ return
 					end
 					return vim.lsp.rpc.start(cmd, dispatchers)
 				end,
+				-- sqlsのフォーマッタはFOREIGN KEY制約を直前のカラム定義に連結する不具合があるため無効化し、
+				-- フォーマットはnull-ls経由のsql-formatterに一本化する
+				on_attach = function(client)
+					client.server_capabilities.documentFormattingProvider = false
+					client.server_capabilities.documentRangeFormattingProvider = false
+				end,
 			},
 		}
 
