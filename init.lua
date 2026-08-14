@@ -39,6 +39,9 @@ vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-s>', '<cmd>w<CR>', { noremap = true, silent = true })
 vim.keymap.set('i', '<C-s>', '<Esc><cmd>w<CR>', { noremap = true, silent = true })
 
+-- Enterでカーソル位置のfoldをトグル（ノーマルモードのEnterは通常未使用なのでラグなし）
+vim.keymap.set('n', '<CR>', 'za', { noremap = true, silent = true, desc = "Foldをトグル" })
+
 -- Ctrl + h/j/k/l だけでペイン間を移動できるようにする
 vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-j>', '<C-w>j')
@@ -193,6 +196,11 @@ vim.keymap.set("n", "<leader>db", "<cmd>DBUI<cr>", { desc = "vim-dadbod-uiを起
 
 -- 行番号を表示
 vim.opt.number = true
+
+-- treesitterベースのコードfolding
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldlevel = 99 -- 起動時は全て開いた状態にする
 
 -- マウスを有効に
 vim.opt.mouse = 'a'
