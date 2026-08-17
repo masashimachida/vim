@@ -8,6 +8,9 @@ return {
 	},
 	cmd = "Neotree",
 	opts = {
+		-- dadbod-uiの接続情報ペイン(filetype=dbui)にファイルを開かないようにする
+		-- (デフォルト値のterminal/Trouble/qf/edgyに追加)
+		open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "edgy", "dbui" },
 		filesystem = {
 			-- ファイルを開いた後もサイドバーを閉じない設定
 			follow_current_file = {
