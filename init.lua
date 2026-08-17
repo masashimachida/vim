@@ -39,11 +39,12 @@ vim.keymap.set('i', 'jj', '<Esc>', { noremap = true, silent = true })
 vim.keymap.set('n', '<C-s>', '<cmd>w<CR>', { noremap = true, silent = true })
 vim.keymap.set('i', '<C-s>', '<Esc><cmd>w<CR>', { noremap = true, silent = true })
 
--- Ctrl + h/j/k/l だけでペイン間を移動できるようにする
-vim.keymap.set('n', '<C-h>', '<C-w>h')
-vim.keymap.set('n', '<C-j>', '<C-w>j')
-vim.keymap.set('n', '<C-k>', '<C-w>k')
-vim.keymap.set('n', '<C-l>', '<C-w>l')
+-- Cmd+Shift+h/j/k/l (WezTerm経由でCtrl+Shift+h/j/k/lとして送信される)でペイン間を移動できるようにする
+-- Cmd+jはWezTermのLeaderキーと衝突するため、Shift付きに統一している
+vim.keymap.set('n', '<C-S-h>', '<C-w>h')
+vim.keymap.set('n', '<C-S-j>', '<C-w>j')
+vim.keymap.set('n', '<C-S-k>', '<C-w>k')
+vim.keymap.set('n', '<C-S-l>', '<C-w>l')
 
 -- Option + h/j/k/l でウィンドウをリサイズ
 vim.keymap.set('n', '<M-h>', '<cmd>vertical resize -2<cr>')
@@ -98,6 +99,13 @@ function _G.set_terminal_keymaps()
     end
     -- clear
     vim.keymap.set('t', '<C-l>', [[<C-l>]], { buffer = 0 })
+
+    -- Cmd+Shift+h/j/k/l (WezTerm経由でCtrl+Shift+h/j/k/lとして送信される)でペイン移動
+    -- ターミナルモードを抜けてからウィンドウ移動する
+    vim.keymap.set('t', '<C-S-h>', [[<C-\><C-n><C-w>h]], opts)
+    vim.keymap.set('t', '<C-S-j>', [[<C-\><C-n><C-w>j]], opts)
+    vim.keymap.set('t', '<C-S-k>', [[<C-\><C-n><C-w>k]], opts)
+    vim.keymap.set('t', '<C-S-l>', [[<C-\><C-n><C-w>l]], opts)
 end
 
 vim.api.nvim_create_autocmd("TermOpen", {
