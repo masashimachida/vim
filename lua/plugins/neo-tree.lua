@@ -7,6 +7,16 @@ return {
 		"MunifTanjim/nui.nvim",
 	},
 	cmd = "Neotree",
+	init = function()
+		-- ファイルを指定せずに起動した場合、neo-treeを自動で開く
+		vim.api.nvim_create_autocmd("VimEnter", {
+			callback = function()
+				if vim.fn.argc() == 0 then
+					vim.cmd("Neotree show")
+				end
+			end,
+		})
+	end,
 	opts = {
 		-- dadbod-uiの接続情報ペイン(filetype=dbui)にファイルを開かないようにする
 		-- (デフォルト値のterminal/Trouble/qf/edgyに追加)
