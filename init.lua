@@ -88,6 +88,16 @@ vim.keymap.set('n', '<leader>ll', vim.lsp.buf.code_action, { desc = "Code Action
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable' })
 
 -- ターミナル
+-- Ctrl+tでターミナルを水平分割で開閉
+vim.keymap.set('n', '<C-t>', '<cmd>ToggleTerm direction=horizontal<cr>', { desc = "ターミナルを水平分割で開閉" })
+-- Ctrl+Shift+tでターミナルを垂直分割で開閉
+vim.keymap.set('n', '<C-S-t>', '<cmd>ToggleTerm direction=vertical<cr>', { desc = "ターミナルを垂直分割で開閉" })
+
+-- <leader>t1〜<leader>t3で番号ごとに独立したターミナルインスタンスを開閉(履歴も別)
+vim.keymap.set('n', '<leader>t1', '<cmd>1ToggleTerm<cr>', { desc = "ターミナル1を開閉" })
+vim.keymap.set('n', '<leader>t2', '<cmd>2ToggleTerm<cr>', { desc = "ターミナル2を開閉" })
+vim.keymap.set('n', '<leader>t3', '<cmd>3ToggleTerm<cr>', { desc = "ターミナル3を開閉" })
+
 function _G.set_terminal_keymaps()
     local opts = { buffer = 0 }
     -- Claude Codeのターミナルではescをジョブにそのまま送る必要があるため、
