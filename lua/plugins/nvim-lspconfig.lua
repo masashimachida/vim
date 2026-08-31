@@ -65,13 +65,9 @@ return
                         environment = {
                             language = "ja" -- メッセージを日本語に設定
                         },
-                        stubs = {
-                            "Core",
-                            "standard",
-                            "session",
-                            "superglobals", -- $_SESSION 等のスーパーグローバル変数の宣言はこのstubにあるため必須
-                            -- 他に必要な stubs (例: "date", "json", "hash" など) があればここに記述
-                        },
+                        -- stubsは「デフォルトへの追加」ではなく「完全な置き換え」の仕様のため、
+                        -- 明示指定するとSPL(RuntimeException等)を含む大半の標準拡張が無効化されてしまう。
+                        -- 未指定にしてintelephenseのデフォルト(170以上の標準拡張)をそのまま使う。
 					},
 				},
 			},
