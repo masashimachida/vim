@@ -61,6 +61,10 @@ vim.keymap.set('n', '<leader>S', '<cmd>split<cr>')
 
 
 
+-- ビジュアルモードでインデント後も選択範囲を維持し、連続でインデントできるようにする
+vim.keymap.set('v', '<', '<gv')
+vim.keymap.set('v', '>', '>gv')
+
 -- Esc 2回で検索のハイライトを消す
 vim.keymap.set('n', '<Esc><Esc>', ':nohlsearch<CR><Esc>', { silent = true })
 
