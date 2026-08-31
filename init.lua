@@ -85,8 +85,8 @@ vim.keymap.set("n", "<C-M-l>", function()
     vim.notify("Formatting...", vim.log.levels.INFO)
 end, { desc = "Format current buffer" })
 
--- <leader>llでCodeAction
-vim.keymap.set('n', '<leader>ll', vim.lsp.buf.code_action, { desc = "Code Action" })
+-- Ctrl+lでCodeAction
+vim.keymap.set('n', '<C-l>', vim.lsp.buf.code_action, { desc = "Code Action" })
 
 -- <leader> + r + n でリネーム
 vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable' })

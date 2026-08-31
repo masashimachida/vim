@@ -19,8 +19,7 @@ return
 	config = function()
 		require("mason").setup()
 		require("mason-lspconfig").setup({
-			-- ensure_installed = { "ts_ls", "lua_ls", "intelephense", "phpactor" },
-			ensure_installed = { "ts_ls", "lua_ls", "phpactor", "cssls", "sqls" },
+			ensure_installed = { "ts_ls", "lua_ls", "intelephense", "phpactor", "cssls", "sqls" },
 		})
 		require("mason-tool-installer").setup({
 			-- LSPサーバー以外のツール（フォーマッタ・リンタ等）をmason経由で自動インストール
@@ -42,8 +41,7 @@ return
 		})
 
 		local capabilities = require('cmp_nvim_lsp').default_capabilities()
-		-- local servers = { "ts_ls", "lua_ls", "intelephense", "phpactor" }
-		local servers = { "ts_ls", "lua_ls", "phpactor", "cssls", "sqls" }
+		local servers = { "ts_ls", "lua_ls", "intelephense", "phpactor", "cssls", "sqls" }
 
 		-- サーバーごとの固有設定
 		local server_settings = {
@@ -56,6 +54,8 @@ return
 				},
 			},
 			intelephense = {
+				-- phpactorはBladeファイルを担当するため、intelephenseはphpのみに絞り二重attachを防ぐ
+				filetypes = { "php" },
 				settings = {
 					intelephense = {
 						completion = {
@@ -68,12 +68,16 @@ return
                         stubs = {
                             "Core",
                             "standard",
+                            "session",
+                            "superglobals", -- $_SESSION 等のスーパーグローバル変数の宣言はこのstubにあるため必須
                             -- 他に必要な stubs (例: "date", "json", "hash" など) があればここに記述
                         },
 					},
 				},
 			},
 			phpactor = {
+				-- intelephense(無料版)はcodeAction非対応(premium限定)なため、
+				-- phpでもphpactorを併用してcodeActionを利用可能にする
 				filetypes = { "php", "blade" },
 				settings = {
 					["phpactor.stub_resolver.source"] = "all", -- または "php" もしくは "all"
