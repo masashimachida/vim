@@ -42,12 +42,13 @@ vim.keymap.set('i', '<C-s>', '<Esc><cmd>w<CR>', { noremap = true, silent = true 
 -- Enterでカーソル位置のfoldをトグル（ノーマルモードのEnterは通常未使用なのでラグなし）
 vim.keymap.set('n', '<CR>', 'za', { noremap = true, silent = true, desc = "Foldをトグル" })
 
--- Cmd+Shift+h/j/k/l (WezTerm経由でCtrl+Shift+h/j/k/lとして送信される)でペイン間を移動できるようにする
--- Cmd+jはWezTermのLeaderキーと衝突するため、Shift付きに統一している
-vim.keymap.set('n', '<C-S-h>', '<C-w>h')
-vim.keymap.set('n', '<C-S-j>', '<C-w>j')
-vim.keymap.set('n', '<C-S-k>', '<C-w>k')
-vim.keymap.set('n', '<C-S-l>', '<C-w>l')
+-- Option/Alt+Shift+h/j/k/l でペイン間を移動できるようにする
+-- Ctrl+Shift+h/j/k/lはターミナルの仕様上Ctrl+h/j/k/lと区別できず使えないため、
+-- Shiftの有無を区別できるAlt(Option)+Shiftに統一している
+vim.keymap.set('n', '<M-H>', '<C-w>h')
+vim.keymap.set('n', '<M-J>', '<C-w>j')
+vim.keymap.set('n', '<M-K>', '<C-w>k')
+vim.keymap.set('n', '<M-L>', '<C-w>l')
 
 -- Option + h/j/k/l でウィンドウをリサイズ
 vim.keymap.set('n', '<M-h>', '<cmd>vertical resize -2<cr>')
@@ -94,8 +95,8 @@ vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename variable'
 -- ターミナル
 -- Ctrl+tでターミナルを水平分割で開閉
 vim.keymap.set('n', '<C-t>', '<cmd>ToggleTerm direction=horizontal<cr>', { desc = "ターミナルを水平分割で開閉" })
--- Ctrl+Shift+tでターミナルを垂直分割で開閉
-vim.keymap.set('n', '<C-S-t>', '<cmd>ToggleTerm direction=vertical<cr>', { desc = "ターミナルを垂直分割で開閉" })
+-- Alt+Shift+tでターミナルを垂直分割で開閉(Ctrl+Shift+tはターミナルの仕様上Ctrl+tと区別できないため使わない)
+vim.keymap.set('n', '<M-T>', '<cmd>ToggleTerm direction=vertical<cr>', { desc = "ターミナルを垂直分割で開閉" })
 
 -- <leader>t1〜<leader>t3で番号ごとに独立したターミナルインスタンスを開閉(履歴も別)
 vim.keymap.set('n', '<leader>t1', '<cmd>1ToggleTerm<cr>', { desc = "ターミナル1を開閉" })
@@ -117,12 +118,11 @@ function _G.set_terminal_keymaps()
     -- clear
     vim.keymap.set('t', '<C-l>', [[<C-l>]], { buffer = 0 })
 
-    -- Cmd+Shift+h/j/k/l (WezTerm経由でCtrl+Shift+h/j/k/lとして送信される)でペイン移動
-    -- ターミナルモードを抜けてからウィンドウ移動する
-    vim.keymap.set('t', '<C-S-h>', [[<C-\><C-n><C-w>h]], opts)
-    vim.keymap.set('t', '<C-S-j>', [[<C-\><C-n><C-w>j]], opts)
-    vim.keymap.set('t', '<C-S-k>', [[<C-\><C-n><C-w>k]], opts)
-    vim.keymap.set('t', '<C-S-l>', [[<C-\><C-n><C-w>l]], opts)
+    -- Option/Alt+Shift+h/j/k/lでペイン移動(ターミナルモードを抜けてからウィンドウ移動する)
+    vim.keymap.set('t', '<M-H>', [[<C-\><C-n><C-w>h]], opts)
+    vim.keymap.set('t', '<M-J>', [[<C-\><C-n><C-w>j]], opts)
+    vim.keymap.set('t', '<M-K>', [[<C-\><C-n><C-w>k]], opts)
+    vim.keymap.set('t', '<M-L>', [[<C-\><C-n><C-w>l]], opts)
 end
 
 vim.api.nvim_create_autocmd("TermOpen", {
