@@ -37,5 +37,6 @@
   "vim-dadbod": { "branch": "master", "commit": "6d1d41da4873a445c5605f2005ad2c68c99d8770" },
   "vim-dadbod-completion": { "branch": "master", "commit": "a8dac0b3cf6132c80dc9b18bef36d4cf7a9e1fe6" },
   "vim-dadbod-ui": { "branch": "master", "commit": "afd07819d8efcefc3317205b855ad4e3513b0011" },
-  "vim-doge": { "branch": "master", "commit": "fea6ac4b1aaa2e10e08ecf53ad0fe809fc7d8b53" }
+  "vim-doge": { "branch": "master", "commit": "fea6ac4b1aaa2e10e08ecf53ad0fe809fc7d8b53" },
+  "zen-mode.nvim": { "branch": "main", "commit": "8564ce6d29ec7554eb9df578efa882d33b3c23a7" }
 }

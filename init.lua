@@ -212,6 +212,11 @@ vim.g.db_ui_show_database_icon = 0
 vim.g.db_ui_force_echo_notifications = 1
 vim.keymap.set("n", "<leader>db", "<cmd>DBUI<cr>", { desc = "vim-dadbod-uiを起動" })
 
+-- ----------------------------------------------------------------------------------------------
+-- zen-mode.nvim
+-- ----------------------------------------------------------------------------------------------
+vim.keymap.set("n", "<leader>zz", "<cmd>ZenMode<cr>", { desc = "Zen Modeを切り替え" })
+
 
 
 -- option
