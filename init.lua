@@ -231,6 +231,12 @@ vim.opt.foldlevel = 99 -- 起動時は全て開いた状態にする
 
 -- マウスを有効に
 vim.opt.mouse = 'a'
+-- マウススクロール量（ver: 縦の行数 / hor: 横の列数）
+vim.opt.mousescroll = "ver:3,hor:3"
+-- Shift+横スクロールは標準だと mousescroll を無視して画面幅ぶん飛ぶため、
+-- 通常の横スクロールとして扱い hor の列数で動かす
+vim.keymap.set({ 'n', 'v', 'i' }, '<S-ScrollWheelLeft>', '<ScrollWheelLeft>')
+vim.keymap.set({ 'n', 'v', 'i' }, '<S-ScrollWheelRight>', '<ScrollWheelRight>')
 
 -- ビジュアルモードで選択している間、選択範囲をリアルタイムでシステムクリップボードに同期する
 -- (mouse=a によりドラッグ選択もNeovim側のビジュアル選択になるため、
