@@ -171,20 +171,6 @@ vim.api.nvim_create_autocmd("WinEnter", {
 -- neo-tree.nvim
 -- ----------------------------------------------------------------------------------------------
 -- Neo-treeを「開く」か「フォーカスする」関数
-local function open_or_focus_neotree()
-    local manager = require("neo-tree.sources.manager")
-    local renderer = require("neo-tree.ui.renderer")
-    local state = manager.get_state("filesystem")
-    local window_exists = renderer.window_exists(state)
-
-    if window_exists then
-        -- すでに開いているなら、そのウィンドウにフォーカスを移動
-        vim.cmd("Neotree focus")
-    else
-        -- 閉じていれば、左側に新しく開く
-        vim.cmd("Neotree show left")
-    end
-end
 -- vim.keymap.set("n", "<C-f>", open_or_focus_neotree, { desc = "Focus or Open Neo-tree" })
 vim.keymap.set("n", "<leader>tt", "<cmd>Neotree<cr>", { desc = "Neotreeを開く" })
 
@@ -212,6 +198,11 @@ vim.g.db_ui_show_database_icon = 0
 vim.g.db_ui_force_echo_notifications = 1
 vim.keymap.set("n", "<leader>db", "<cmd>DBUI<cr>", { desc = "vim-dadbod-uiを起動" })
 
+-- ----------------------------------------------------------------------------------------------
+-- zen-mode.nvim
+-- ----------------------------------------------------------------------------------------------
+vim.keymap.set("n", "<leader>zz", "<cmd>ZenMode<cr>", { desc = "Zen Modeを切り替え" })
+
 
 
 -- option
@@ -226,6 +217,12 @@ vim.opt.foldlevel = 99 -- 起動時は全て開いた状態にする
 
 -- マウスを有効に
 vim.opt.mouse = 'a'
+-- マウススクロール量（ver: 縦の行数 / hor: 横の列数）
+vim.opt.mousescroll = "ver:3,hor:3"
+-- Shift+横スクロールは標準だと mousescroll を無視して画面幅ぶん飛ぶため、
+-- 通常の横スクロールとして扱い hor の列数で動かす
+vim.keymap.set({ 'n', 'v', 'i' }, '<S-ScrollWheelLeft>', '<ScrollWheelLeft>')
+vim.keymap.set({ 'n', 'v', 'i' }, '<S-ScrollWheelRight>', '<ScrollWheelRight>')
 
 -- ビジュアルモードで選択している間、選択範囲をリアルタイムでシステムクリップボードに同期する
 -- (mouse=a によりドラッグ選択もNeovim側のビジュアル選択になるため、

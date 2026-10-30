@@ -13,6 +13,7 @@ return {
   init = function()
     -- Your DBUI configuration
     vim.g.db_ui_use_nerd_fonts = 1
+    vim.g.db_ui_win_position = "right"
 
     -- クエリ結果が折りたたまれて表示されるのを防ぐ
     -- (dbout.vimがfoldmethod=exprを設定し、複数回クエリを実行すると
