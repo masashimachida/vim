@@ -171,20 +171,6 @@ vim.api.nvim_create_autocmd("WinEnter", {
 -- neo-tree.nvim
 -- ----------------------------------------------------------------------------------------------
 -- Neo-treeを「開く」か「フォーカスする」関数
-local function open_or_focus_neotree()
-    local manager = require("neo-tree.sources.manager")
-    local renderer = require("neo-tree.ui.renderer")
-    local state = manager.get_state("filesystem")
-    local window_exists = renderer.window_exists(state)
-
-    if window_exists then
-        -- すでに開いているなら、そのウィンドウにフォーカスを移動
-        vim.cmd("Neotree focus")
-    else
-        -- 閉じていれば、左側に新しく開く
-        vim.cmd("Neotree show left")
-    end
-end
 -- vim.keymap.set("n", "<C-f>", open_or_focus_neotree, { desc = "Focus or Open Neo-tree" })
 vim.keymap.set("n", "<leader>tt", "<cmd>Neotree<cr>", { desc = "Neotreeを開く" })
 
